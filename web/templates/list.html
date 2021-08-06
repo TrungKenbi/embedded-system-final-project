@@ -1,0 +1,57 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+	</style>
+{% endblock %}
+
+
+{% block title %}
+Lịch sử mở cửa hệ thống
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row pb-5">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+      <h1 class="pt-5 pb-2">Lịch sử mở cửa hệ thống</h1>
+
+		<table class="table">
+			<tr>
+				<th>#</th>
+				<th>Tên giảng viên</th>
+				<th>Phòng</th>
+				<th>Mở cửa lúc</th>
+				<th>Đóng cửa lúc</th>
+				<th>Trạng thái</th>
+			</tr>
+
+			<!-- here is a for-loop to give us all the socks -->
+			{% for door_log in door_logs %}
+			<tr>
+				<td>{{ door_log[0] }}</td>
+				<td>{{ door_log[1] }}</td>
+				<td>{{ door_log[2] }}</td>
+				<td>{{ door_log[3] }}</td>
+				<td>{{ door_log[4] }}</td>
+				<td>
+					{% if door_log[4] == None %}
+						<p class="bg-success text-center">CHƯA ĐÓNG CỬA</p>
+					{% else %}
+						<p class="bg-warning text-center">ĐÃ ĐÓNG CỬA</p>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
