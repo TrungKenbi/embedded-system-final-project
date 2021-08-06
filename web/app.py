@@ -4,11 +4,7 @@ import sqlite3
 from sqlite3 import Error
 
 app = Flask(__name__)
-
-# Flask-Bootstrap requires this line
 Bootstrap(app)
-
-# the name of the database; add path if necessary
 db_name = '../door.db'
 
 #routes
