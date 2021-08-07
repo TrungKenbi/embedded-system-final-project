@@ -8,7 +8,7 @@
 
 #define DOOR_OPEN_ANGLE 0
 #define DOOR_CLOSE_ANGLE 180
-#define DOOR_SPEED 40
+#define DOOR_SERVO_SPEED 40
 #define LONG_PRESS_TIME 1000
 
 bool currentDoorState = false;
@@ -94,7 +94,7 @@ void setup() {
 void loop() {
   // Nếu có lệnh mở cửa thì sẽ mở cửa
   if (isOpeningDoor && !currentDoorState) {
-    doorServo.startEaseTo(DOOR_OPEN_ANGLE, DOOR_SPEED, false);
+    doorServo.startEaseTo(DOOR_OPEN_ANGLE, DOOR_SERVO_SPEED, false);
     alert();
     displayDoorState(true);
     isOpeningDoor = false;
@@ -103,7 +103,7 @@ void loop() {
 
   // Nếu có lệnh đóng cửa thì sẽ đóng cửa
   if (isClosingDoor && currentDoorState) {
-    doorServo.startEaseTo(DOOR_CLOSE_ANGLE, DOOR_SPEED, false);
+    doorServo.startEaseTo(DOOR_CLOSE_ANGLE, DOOR_SERVO_SPEED, false);
     alert();
     displayDoorState(false);
     isClosingDoor = false;
