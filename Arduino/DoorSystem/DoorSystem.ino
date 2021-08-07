@@ -6,16 +6,17 @@
 #define SERVO_PIN 9
 #define BUZZER_PIN 11
 
-#define DOOR_OPEN_ANGLE 0
-#define DOOR_CLOSE_ANGLE 180
-#define DOOR_SERVO_SPEED 40
-#define LONG_PRESS_TIME 1000
-
 #define LCD_ADDRESS 0x27
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2
 
 #define SERIAL_PORT_BAUD_RATE 115200
+
+#define DOOR_OPEN_ANGLE 0
+#define DOOR_CLOSE_ANGLE 180
+#define DOOR_SERVO_SPEED 40
+
+#define LONG_PRESS_TIME 1000
 
 bool currentDoorState = false;
 bool isOpeningDoor = false;
