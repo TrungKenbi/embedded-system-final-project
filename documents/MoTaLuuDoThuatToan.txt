@@ -1,0 +1,3 @@
+Lưu đồ giải thuật của "Hệ thống mở cửa bằng nhận diện khuôn mặt"
+
+Đầu tiên khi hệ thống khởi động sẽ nhận dữ liệu từ webcam để kiểm tra khuôn mặt, hệ thống sẽ dự đoán khuôn mặt từ mô hình đã được đào tạo trước đó, nếu độ chính xác đạt hơn 95% thì hệ thống sẽ xác định chính là người đó, sau đó hệ thống sẽ kiểm tra dữ liệu thời khóa biểu của người đã được xác định đó, nếu đúng thời gian và địa điểm (phòng học đang muốn mở cửa) trên thời khóa biểu thì sẽ gửi lệnh mở cửa và cửa sẽ được mở, đồng thời hệ hệ thống cũng ghi nhật ký lại thời gian mở cửa của người dùng.
