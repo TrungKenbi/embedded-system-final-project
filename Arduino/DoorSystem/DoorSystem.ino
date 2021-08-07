@@ -11,6 +11,12 @@
 #define DOOR_SERVO_SPEED 40
 #define LONG_PRESS_TIME 1000
 
+#define LCD_ADDRESS 0x27
+#define LCD_WIDTH 16
+#define LCD_HEIGHT 2
+
+#define SERIAL_PORT_BAUD_RATE 115200
+
 bool currentDoorState = false;
 bool isOpeningDoor = false;
 bool isClosingDoor = false;
@@ -18,7 +24,7 @@ unsigned long pressedTime = 0;
 unsigned long releasedTime = 0;
 
 ServoEasing doorServo;
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT);
 
 void displayDoorState(bool);
 void openDoor();
@@ -27,7 +33,7 @@ void alert();
 
 void setup() {
   // Khởi tạo
-  Serial.begin(115200);
+  Serial.begin(SERIAL_PORT_BAUD_RATE);
   Serial.setTimeout(1);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
