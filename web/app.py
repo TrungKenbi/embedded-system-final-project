@@ -13,8 +13,7 @@ def index():
     try:
         conn = sqlite3.connect(db_name)
         cur = conn.cursor()
-        door_logs = cur.execute("SELECT door_logs.id, users.fullname, door_logs.room, door_logs.opened_at, door_logs.closed_at FROM door_logs JOIN users ON door_logs.user_id = users.id").fetchall()
-        print(door_logs)
+        door_logs = cur.execute("SELECT door_logs.id, users.fullname, door_logs.room, datetime(door_logs.opened_at, 'localtime'), datetime(door_logs.closed_at, 'localtime') FROM door_logs JOIN users ON door_logs.user_id = users.id").fetchall()
         return render_template('list.html', door_logs=door_logs)
     except Exception as e:
         # e holds description of the error
