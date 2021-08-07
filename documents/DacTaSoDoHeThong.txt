@@ -1,0 +1,32 @@
+Tập dữ liệu khuôn mặt:
+Chứa dữ liệu khuôn mặt của nhiều giảng viên được gán nhãn (mỗi người tối thiểu 50 hình ảnh) và cần chụp rõ khuôn mặt ở nhiều góc độ khác nhau.
+
+Module đào tạo model từ tập dữ liệu:
+Module có chức năng đào tạo model từ tập dữ liệu có sẵn, sử dụng MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications từ framework TensorFlow của Google để đào tạo
+
+Model nhận diện đã được đào tạo:
+Là một tập tin nhị phân chứa kết quả của quá trình đào tạo, có thể sử dụng để dự đoán ở các module khác
+
+Module nhận diện khuôn mặt: 
+Lấy hình ảnh từ đầu vào và tiền xử lý cơ bản và bắt đầu dự đoán khuôn mặt trong bức ảnh và trả về 1 mảng chứa các khuôn mặt có khả năng kèm theo độ chính xác.
+
+Website DKMH của trường:
+Là website của sinh viên trường đại học Thủ Dầu Một, sinh viên có thể truy cập vào đây để xem thời khóa biểu, xem điểm và nhiều tiện ích khác dành cho sinh viên.
+
+Module lấy thời khóa biểu từ trường:
+Là module lấy thời khóa biểu của tuần hiện tại của giảng viên/sinh viên thông qua mã số, kết quả trả về là thông tin sinh viên và mảng các môn học trong tuần.
+
+Module lấy hình ảnh và xử lý dữ liệu:
+Đây là module chính, sẽ chạy để lấy dữ liệu từ webcam để xác định người đang muốn mở cửa bằng cách kết nối với module nhận diện khuôn mặt, sau đó sẽ truy vấn dữ liệu thời khóa biểu của người này xem có lịch giảng dạy hay không để có thể quyết định mở cửa. Nếu đạt được tất cả điều kiện trên thì module sẽ gửi dữ liệu qua module điều khiển cửa để mở cửa, đồng thời ghi lịch sử lại tại thời gian mà người dùng mở cửa đó.
+
+Webcam:
+Là cảm biến ánh sáng sẽ thu thập hình ảnh khuôn mặt để xử lý ở các bước sau
+
+Bộ phận điều khiển cửa và cánh cửa:
+Là module vật lý duy nhất của hệ thống, có nhiệm vụ điều khiển cửa bằng Servo SG90 và một nút nhất để đóng cửa.
+
+Database lưu lịch sử:
+Cơ sở dữ liệu lưu lịch sử đóng và mở cửa toàn bộ hệ thống, database sử dụng là SQLite
+
+Website xem lịch sử đóng/mở cửa:
+Giao diện web thân thiện với người dùng để tra cứu lịch sử đóng mở cửa của toàn bộ hệ thống.
