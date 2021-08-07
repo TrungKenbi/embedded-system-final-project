@@ -1,21 +1,26 @@
 #include <ServoEasing.h>
 #include <LiquidCrystal_I2C.h>
 
+// Cấu hình chân kết nối
 #define BUTTON_PIN 2
 #define LED_PIN 3
 #define SERVO_PIN 9
 #define BUZZER_PIN 11
 
+// Cấu hình LCD
 #define LCD_ADDRESS 0x27
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2
 
+// Cấu hình Serial Port
 #define SERIAL_PORT_BAUD_RATE 115200
 
+// Cấu hình hệ thống cửa
 #define DOOR_OPEN_ANGLE 0
 #define DOOR_CLOSE_ANGLE 180
 #define DOOR_SERVO_SPEED 40
 
+// Thời gian giữ nút tối thiểu
 #define LONG_PRESS_TIME 1000
 
 bool currentDoorState = false;
