@@ -23,6 +23,7 @@
 // Thời gian giữ nút tối thiểu
 #define LONG_PRESS_TIME 1000
 
+// Các biến trạng thái và thời gian
 bool currentDoorState = false;
 bool isOpeningDoor = false;
 bool isClosingDoor = false;
