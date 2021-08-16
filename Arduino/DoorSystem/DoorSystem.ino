@@ -16,8 +16,8 @@
 #define SERIAL_PORT_BAUD_RATE 115200
 
 // Cấu hình hệ thống cửa
-#define DOOR_OPEN_ANGLE 0
-#define DOOR_CLOSE_ANGLE 180
+#define DOOR_OPEN_ANGLE 90
+#define DOOR_CLOSE_ANGLE 0
 #define DOOR_SERVO_SPEED 40
 
 // Thời gian giữ nút tối thiểu
@@ -29,6 +29,17 @@ bool isOpeningDoor = false;
 bool isClosingDoor = false;
 unsigned long pressedTime = 0;
 unsigned long releasedTime = 0;
+
+uint8_t bell[8]  = {0x4,0xe,0xe,0xe,0x1f,0x0,0x4};
+byte smiley[8] = {
+  B00000,
+  B10001,
+  B00000,
+  B00000,
+  B10001,
+  B01110,
+  B00000,
+};
 
 ServoEasing doorServo;
 LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT);
@@ -51,6 +62,8 @@ void setup() {
   // Khởi tạo LCD
   lcd.init();
   lcd.backlight();
+
+  lcd.createChar(0, bell);
 
   // Khởi tạo servo
   if (doorServo.attach(SERVO_PIN) == INVALID_SERVO)
@@ -153,8 +166,11 @@ void alert() {
 // Hiển thị trạng thái lên màn hình
 void displayDoorState(bool isOpen) {
   lcd.clear();
+  lcd.setCursor(1, 0);
+  lcd.write(byte(0));
   lcd.setCursor(3, 0);
-  lcd.print("Door State");
+  lcd.print("Door State ");
+  lcd.write(byte(0));
 
   lcd.setCursor(isOpen ? 6 : 5, 1);
   lcd.print(isOpen ? "OPEN" : "CLOSE");

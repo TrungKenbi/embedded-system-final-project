@@ -9,9 +9,12 @@ import time
 
 import sqlite3
 from sqlite3 import Error
+import requests
+
+from datetime import datetime
 
 
-ROOM_NAME = 'I3.302'
+ROOM_NAME = 'I3-105'
 
 HAS_HARDWARE = True
 SERIAL_PORT = 'COM8'
@@ -71,10 +74,10 @@ def create_door_log(conn, user_id, room):
     conn.commit()
     return cur.lastrowid
 
-def check_door(conn, user_id, room):
-    sql = ''' SELECT COUNT(*) FROM door_logs WHERE user_id = ? AND room = ? AND closed_at IS NULL '''
+def check_door(conn, room):
+    sql = ''' SELECT COUNT(*) FROM door_logs WHERE room = ? AND closed_at IS NULL '''
     cur = conn.cursor()
-    cur.execute(sql, (user_id, room))
+    cur.execute(sql, (room,))
     return cur.fetchone()[0]
     
 def update_door(conn, id):
@@ -82,7 +85,23 @@ def update_door(conn, id):
     cur = conn.cursor()
     cur.execute(sql, (id,))
     conn.commit()
+ 
+def get_user_by_id(conn, id):
+    sql = ''' SELECT * FROM users WHERE id = ? '''
+    cur = conn.cursor()
+    cur.execute(sql, (id,))
+    rows = cur.fetchall()
+    return rows
+    
+def check_TDMU(student_code):
+    response = requests.get('http://45.119.212.43/api/student/' + student_code)
+    json = response.json()
+    currentDayOfWeek = datetime.today().weekday() + 1
 
+    for t in json['timetable']:
+        if t['dayOfWeek'] == currentDayOfWeek and t['roomName'] == ROOM_NAME:
+            return True
+    return False
 
 
 database = r"door.db"
@@ -102,7 +121,7 @@ with conn:
             record_id = 0
             last_time_close = current_milli_time()
                 
-        print(current_milli_time() - last_time_close + 10000)
+        # print(current_milli_time() - last_time_close + 10000)
         if currentUser == 0 and current_milli_time() > last_time_close + 10000:
             image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(image)
@@ -125,12 +144,17 @@ with conn:
             
             if bestPredict > 0.90:
                 print(bestPredict, bestPredictIndex)
-                if check_door(conn, bestPredictIndex + 1, ROOM_NAME) == 0:
-                    print("Insert door log to database")
-                    if HAS_HARDWARE:
-                        currentUser = bestPredictIndex + 1
-                        arduino.write(str(1).encode())
-                    record_id = create_door_log(conn, bestPredictIndex + 1, ROOM_NAME)
+                if check_door(conn, ROOM_NAME) == 0:
+                    currentUser = bestPredictIndex + 1
+                    user_data = get_user_by_id(conn, currentUser)[0][1]
+                    print(user_data)
+                    if check_TDMU(user_data):
+                        print("Insert door log to database")
+                        if HAS_HARDWARE:
+                            arduino.write(str(1).encode())
+                        record_id = create_door_log(conn, bestPredictIndex + 1, ROOM_NAME)
+                    else:
+                        print('Khong co thoi khoa bieu')
         
         sleep(0.1)
         
